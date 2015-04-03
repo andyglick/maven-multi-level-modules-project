@@ -6,19 +6,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>multiple-level-maven-modules-parent</artifactId>
+    <artifactId>maven-multiple-level-modules-parent</artifactId>
     <groupId>org.zrgs.maven</groupId>
     <version>1.0</version>
   </parent>
 
   <groupId>org.zrgs.maven</groupId>
-  <artifactId>multiple-level-maven-modules-sub-parent</artifactId>
+  <artifactId>maven-multiple-level-modules-sub-parent</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
-  <name>multiple-level-maven-modules-sub-parent</name>
+  <name>maven-multiple-level-modules-sub-parent</name>
 
   <modules>
-    <module>multiple-level-maven-modules-first</module>
-    <module>multiple-level-maven-modules-second</module>
+    <module>maven-multiple-level-modules-first</module>
+    <module>maven-multiple-level-modules-second</module>
   </modules>
 </project>
