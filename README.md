@@ -5,6 +5,16 @@ My friend Rob recently asked me if I knew how to execute a single test in a Mave
 didn't know how to do that. I didn't have any visibility into his project's directory structure and sending emails back and forth wasn't really getting us
 anywhere very quickly. Finally I bit the bullet and put together my own little example Maven project.
 
+This is the directory structure of the project
+
+    maven-multiple-level-modules-parent
+      maven-multiple-level-modules-sub-parent
+        maven-multiple-level-modules-first
+        maven-multiple-level-modules-second
+
+There is a pom in each module directory, in the 3 modules below the root module, each references the one above it as it's parent. The 2 parent modules each
+reference their respective children in its own <modules> section.
+
 The parent pom
 ==============
 
@@ -19,16 +29,56 @@ type is also pom
 The pom children
 ================
 
-Layered under the sub-parent module are 2 child modules whose poms each have jar as their type. So if I wanted to access only 1 of the children from the
-top-level directory I would have to give the -pl command with the suitable module name and that was the rub, I couldn't figure out how to determine what the
-module name actually was for the purposes of getting maven to choose the right module.
+Layered under the sub-parent module are 2 child modules whose poms each have jar as their type.
 
-    maven-multiple-level-modules-parent
-      maven-multiple-level-modules-sub-parent
-        maven-multiple-level-modules-first
-        maven-multiple-level-modules-second
+The Problem
+===========
 
-It turns out that the GAV applies here. GAV is a Maven technical concept that resolves to GroupId, ArtifactId and Version.
+So if the goal was to execute the test phase on only 1 of the pom children, and beyond that to fire only 1 test class from that module, or to be even more
+discriminating, to execute only 1 test from 1 test class, then at a minimum the *-pl* would have to be usd to name the module. But what I couldn't figure out
+was how to identify the module so that the Maven engine would recognize it and execute it. In the end, and is often what I find to be the case when munging
+around with Maven internals *-X* is your friend. What I saw was:
+
+    [INFO] Scanning for projects...
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Reactor Build Order:
+    [INFO]
+    [INFO] maven-multiple-level-modules-parent
+    [INFO] maven-multiple-level-modules-sub-parent
+    [INFO] maven-multiple-level-modules-first
+    [INFO] maven-multiple-level-modules-second
+    [INFO]
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Building maven-multiple-level-modules-parent 1.
+    [INFO] ------------------------------------------------------------------------
+    [INFO]
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Building maven-multiple-level-modules-sub-parent 1.0
+    [INFO] ------------------------------------------------------------------------
+    [INFO]
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Building maven-multiple-level-modules-first 1.0
+    [INFO] ------------------------------------------------------------------------
+    [DEBUG] === REACTOR BUILD PLAN ================================================
+    [DEBUG] Project: org.zrgs.maven:maven-multiple-level-modules-parent:pom:1.0
+    [DEBUG] Tasks:   [test]
+    [DEBUG] Style:   Regular
+    [DEBUG] -----------------------------------------------------------------------
+    [DEBUG] Project: org.zrgs.maven:maven-multiple-level-modules-sub-parent:pom:1.0
+    [DEBUG] Tasks:   [test]
+    [DEBUG] Style:   Regular
+    [DEBUG] -----------------------------------------------------------------------
+    [DEBUG] Project: org.zrgs.maven:maven-multiple-level-modules-first:jar:1.0
+    [DEBUG] Tasks:   [test]
+    [DEBUG] Style:   Regular
+    [DEBUG] -----------------------------------------------------------------------
+    [DEBUG] Project: org.zrgs.maven:maven-multiple-level-modules-second:jar:1.0
+    [DEBUG] Tasks:   [test]
+    [DEBUG] Style:   Regular
+    [DEBUG] =======================================================================
+
+
+So it turns out that the GAV for each module applies here. GAV is a Maven technical concept that resolves to GroupId, ArtifactId and Version.
 
 So in the case of executing the test phase only in the maven-multiple-level-modules-first module the syntax would be:
 
