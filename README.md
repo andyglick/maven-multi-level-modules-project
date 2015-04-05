@@ -1,5 +1,4 @@
-Multiple Level Maven Modules
-============================
+#Multiple Level Maven Modules
 
 My friend Rob recently asked me if I knew how to execute a single test in a Maven module that was nested 2 or more levels below the parent pom and I
 didn't know how to do that, and none of the suggestions that I made worked for him in his environment. I didn't have any visibility into his project's
@@ -16,24 +15,20 @@ This is the directory structure of the project
 There is a pom in each module directory. In the 3 modules below the root module, each references the one above it as it's parent. The 2 parent modules each
 reference their respective children in its own *modules* section.
 
-The parent pom
-==============
+##The parent pom
 
 There is a parent pom in the top level module, whose type is pom
 
-The sub-parent pom
-==================
+##The sub-parent pom
 
 Directly below the parent module there is another module with a parent pom. Let's refer to it as the sub-parent module containing a sub-parent pom, and its
 type is also pom
 
-The pom children
-================
+##The pom children
 
 Layered under the sub-parent module are 2 child modules whose poms each have jar as their type.
 
-The Problem
-===========
+##The Problem
 
 So if the goal was to execute the test phase of only 1 of the pom children, and beyond that to fire only 1 test class from that module, or to be even more
 discriminating, to execute only 1 test from the chosen test class, then at a minimum the *-pl* option would have to be used to name the module. But what I
@@ -85,8 +80,7 @@ can see on each of the "[DEBUG] Project:" lines is in fact the GAV of the module
 Why this important piece of information is hidden in the DEBUG output and isn't included in the default INFO text is beyond me. It is another "interesting"
 design decision on the part of the Maven developers.
 
-The Solution
-============
+##The Solution
 
 So in the case of executing the test phase only in the maven-multiple-level-modules-first module the syntax turned out to be:
 
