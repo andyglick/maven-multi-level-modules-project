@@ -12,7 +12,7 @@ This is the directory structure of the project
         maven-multiple-level-modules-first
         maven-multiple-level-modules-second
 
-There is a pom in each module directory, in the 3 modules below the root module, each references the one above it as it's parent. The 2 parent modules each
+There is a pom in each module directory. In the 3 modules below the root module, each references the one above it as it's parent. The 2 parent modules each
 reference their respective children in its own <modules> section.
 
 The parent pom
@@ -34,10 +34,10 @@ Layered under the sub-parent module are 2 child modules whose poms each have jar
 The Problem
 ===========
 
-So if the goal was to execute the test phase on only 1 of the pom children, and beyond that to fire only 1 test class from that module, or to be even more
-discriminating, to execute only 1 test from 1 test class, then at a minimum the *-pl* would have to be usd to name the module. But what I couldn't figure out
-was how to identify the module so that the Maven engine would recognize it and execute it. In the end, and is often what I find to be the case when munging
-around with Maven internals *-X* is your friend. What I saw was:
+So if the goal was to execute the test phase of only 1 of the pom children, and beyond that to fire only 1 test class from that module, or to be even more
+discriminating, to execute only 1 test from the chosen test class, then at a minimum the *-pl* option would have to be used to name the module. But what I
+couldn't figure out was how to specify the correct syntax for the name of the module so that the Maven engine would recognize it and execute it. In the end,
+and is often what I find to be the case when munging around with Maven internals *-X* is your friend. What I saw was:
 
     [INFO] Scanning for projects...
     [INFO] ------------------------------------------------------------------------
@@ -80,15 +80,17 @@ around with Maven internals *-X* is your friend. What I saw was:
 
 So it turns out that the GAV for each module applies here. GAV is a Maven technical concept that resolves to GroupId, ArtifactId and Version.
 
-So in the case of executing the test phase only in the maven-multiple-level-modules-first module the syntax would be:
+So in the case of executing the test phase only in the maven-multiple-level-modules-first module the syntax turned out to be:
 
     mvn test -pl org.zrgs.maven:maven-multiple-level-modules-first
 
-To execute only the AppTest test class during that test phase the syntax would be:
+To execute only the AppTest test class during that test phase the syntax is:
 
     mvn test -pl org.zrgs.maven:maven-multiple-level-modules-first -Dtest=AppTest
 
-And to execute only the testOfCopyOfTestApp in the TestApp class the syntax would be:
+And to execute only the testOfCopyOfTestApp in the TestApp class the syntax is:
 
     mvn test -pl org.zrgs.maven:maven-multiple-level-modules-first -Dtest=AppTest#testOfCopyOfTestApp
 
+For completists, I wasn't able to get the syntax to execute multiple tests from the test class using the "+" as a between test delimiter to work. When I
+tried it Maven threw various exceptions.
