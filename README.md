@@ -30,11 +30,11 @@ module name actually was for the purposes of getting maven to choose the right m
 
 It turns out that the GAV applies here. GAV is a Maven technical concept that resolves to GroupId, ArtifactId and Version.
 
-So in the case of executing only the test phase in the maven-multiple-level-modules-first module the syntax would be:
+So in the case of executing the test phase only in the maven-multiple-level-modules-first module the syntax would be:
 
     mvn test -pl org.zrgs.maven:maven-multiple-level-modules-first
 
-To execute only the AppTest test class the syntax would be:
+To execute only the AppTest test class during that test phase the syntax would be:
 
     mvn test -pl org.zrgs.maven:maven-multiple-level-modules-first -Dtest=AppTest
 
