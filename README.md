@@ -80,7 +80,7 @@ end, and what I often find to be the case when munging around with Maven interna
 
 
 So it turns out that the GAV for each module applies here. GAV is a Maven technical concept that resolves to GroupId, ArtifactId and Version. And what you
-can see on the [DEBUG] Project: line is in fact the GAV of the module to be executed.
+can see on each of the "[DEBUG] Project:" lines is in fact the GAV of the module to be executed.
 
 Why this important piece of information is hidden in the DEBUG output and isn't included in the default INFO text is beyond me. It is another "interesting"
 design decision on the part of the Maven developers.
