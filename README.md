@@ -14,7 +14,7 @@ This is the directory structure of the project
         maven-multiple-level-modules-second
 
 There is a pom in each module directory. In the 3 modules below the root module, each references the one above it as it's parent. The 2 parent modules each
-reference their respective children in its own <modules> section.
+reference their respective children in its own *modules* section.
 
 The parent pom
 ==============
