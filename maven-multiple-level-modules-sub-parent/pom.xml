@@ -11,7 +11,6 @@
     <version>1.0</version>
   </parent>
 
-  <groupId>org.zrgs.maven</groupId>
   <artifactId>maven-multiple-level-modules-sub-parent</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
