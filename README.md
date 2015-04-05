@@ -23,6 +23,11 @@ Layered under the sub-parent module are 2 child modules whose poms each have jar
 top-level directory I would have to give the -pl command with the suitable module name and that was the rub, I couldn't figure out how to determine what the
 module name actually was for the purposes of getting maven to choose the right module.
 
+    maven-multiple-level-modules-parent
+      maven-multiple-level-modules-sub-parent
+        maven-multiple-level-modules-first
+        maven-multiple-level-modules-second
+
 It turns out that the GAV applies here. GAV is a Maven technical concept that resolves to GroupId, ArtifactId and Version.
 
 So in the case of executing only the test phase in the maven-multiple-level-modules-first module the syntax would be:
