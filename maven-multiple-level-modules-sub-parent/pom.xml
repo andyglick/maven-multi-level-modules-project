@@ -20,4 +20,5 @@
     <module>maven-multiple-level-modules-first</module>
     <module>maven-multiple-level-modules-second</module>
   </modules>
+
 </project>
