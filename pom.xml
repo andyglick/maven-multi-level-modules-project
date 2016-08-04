@@ -12,7 +12,7 @@
   <name>maven-multiple-level-modules-parent</name>
 
   <prerequisites>
-    <maven>3.2.5</maven>
+    <maven>3.3.9</maven>
   </prerequisites>
 
   <properties>
@@ -21,6 +21,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <surefire.reportFormat>plain</surefire.reportFormat>
     <surefire.useFile>false</surefire.useFile>
+    <surefire.version>2.19.1</surefire.version>
+    <versioneye.project.id>57a34ccf1dadcb0046375dc7</versioneye.project.id>
   </properties>
 
   <modules>
@@ -36,5 +38,45 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.5.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.10</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${surefire.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>2.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${surefire.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>com.versioneye</groupId>
+          <artifactId>versioneye-maven-plugin</artifactId>
+          <version>3.10.0</version>
+          <configuration>
+            <projectId>${versioneye.project.id}</projectId>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.3</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 
 </project>

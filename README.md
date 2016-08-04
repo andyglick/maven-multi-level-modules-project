@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/andyglick/maven-multi-level-modules-project.png)](https://travis-ci.org/andyglick/maven-multi-level-modules-project)
-
+[![Dependency Status](https://www.versioneye.com/user/projects/57a34ccf1dadcb0046375dc7/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57a34ccf1dadcb0046375dc7)
 #Multiple Level Maven Modules
 
 My friend Rob recently asked me if I knew how to execute a single test in a Maven module that was nested 2 or more levels below the parent pom and I
