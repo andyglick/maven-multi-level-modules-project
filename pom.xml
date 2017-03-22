@@ -7,9 +7,22 @@
 
   <groupId>org.zrgs.maven</groupId>
   <artifactId>maven-multiple-level-modules-parent</artifactId>
-  <version>1.0</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>maven-multiple-level-modules-parent</name>
+
+  <distributionManagement>
+    <repository>
+      <id>internal.repo</id>
+      <name>Temporary Staging Repository</name>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
+  </distributionManagement>
+
+  <scm>
+    <developerConnection>scm:git:https://github.com/andyglick/maven-multi-level-modules-project.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
   <prerequisites>
     <maven>3.3.9</maven>
@@ -79,6 +92,10 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+      </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
       </plugin>
