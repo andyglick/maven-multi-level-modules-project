@@ -4,7 +4,7 @@
 
   <groupId>org.zrgs.maven</groupId>
   <artifactId>maven-multiple-level-modules-parent</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>maven-multiple-level-modules-parent</name>
 
