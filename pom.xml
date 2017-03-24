@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+  http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.zrgs.maven</groupId>
   <artifactId>maven-multiple-level-modules-parent</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>maven-multiple-level-modules-parent</name>
 
@@ -89,6 +91,38 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.4.1</version>
+        <executions>
+          <execution>
+            <id>enforce-dependency-convergence</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <rules>
+            <bannedDependencies>
+              <excludes>
+                <!-- use slf4j -->
+                <exclude>commons-logging</exclude>
+                <exclude>log4j</exclude>
+                <exclude>log4j:log4j</exclude>
+                <!-- use org.jdom -->
+                <exclude>jdom:jdom</exclude>
+                <!-- use commons-io:commons-io -->
+                <exclude>org.apache.commons:commons-io</exclude>
+              </excludes>
+              <searchTransitive>true</searchTransitive>
+            </bannedDependencies>
+            <DependencyConvergence/>
+          </rules>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.5.3</version>
