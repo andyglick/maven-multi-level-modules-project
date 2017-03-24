@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-  http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0   http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.zrgs.maven</groupId>
   <artifactId>maven-multiple-level-modules-parent</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.2</version>
   <packaging>pom</packaging>
   <name>maven-multiple-level-modules-parent</name>
 
@@ -20,7 +18,7 @@
 
   <scm>
     <developerConnection>scm:git:https://github.com/andyglick/maven-multi-level-modules-project.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>maven-multiple-level-modules-parent-1.0.2</tag>
   </scm>
 
   <prerequisites>
@@ -119,7 +117,7 @@
               </excludes>
               <searchTransitive>true</searchTransitive>
             </bannedDependencies>
-            <DependencyConvergence/>
+            <DependencyConvergence />
           </rules>
         </configuration>
       </plugin>
