@@ -5,7 +5,7 @@
   <parent>
     <artifactId>maven-multiple-level-modules-parent</artifactId>
     <groupId>org.zrgs.maven</groupId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
 
   <artifactId>maven-multiple-level-modules-sub-parent</artifactId>
