@@ -8,3 +8,8 @@ atlassian-ide-plugin.xml
 *.iws
 
 *.log
+.classpath
+
+effective.pom
+pom.xml.releaseBackup
+release.properties
