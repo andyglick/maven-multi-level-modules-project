@@ -51,6 +51,41 @@
     </dependencies>
   </dependencyManagement>
 
+  <profiles>
+    <profile>
+      <id>coverage-generate</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.7.9</version>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <!--<execution>-->
+                <!--<id>ut-report</id>-->
+                <!--<phase>prepare-package</phase>-->
+                <!--<goals>-->
+                  <!--<goal>report</goal>-->
+                  <!--<goal>restore-instrumented-classes</goal>-->
+                <!--</goals>-->
+              <!--</execution>-->
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>coverage-report</id>
+    </profile>
+
+  </profiles>
+
   <build>
     <pluginManagement>
       <plugins>
@@ -60,7 +95,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.0.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
