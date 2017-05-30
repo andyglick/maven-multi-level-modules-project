@@ -35,6 +35,7 @@
     <surefire.useFile>false</surefire.useFile>
     <surefire.version>2.20</surefire.version>
     <versioneye.project.id>57a34ccf1dadcb0046375dc7</versioneye.project.id>
+    <versioneye.version>3.11.4</versioneye.version>
   </properties>
 
   <modules>
@@ -112,7 +113,7 @@
         <plugin>
           <groupId>com.versioneye</groupId>
           <artifactId>versioneye-maven-plugin</artifactId>
-          <version>3.11.2</version>
+          <version>${versioneye.version}</version>
           <configuration>
             <projectId>${versioneye.project.id}</projectId>
           </configuration>
