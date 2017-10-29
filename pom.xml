@@ -171,8 +171,11 @@
         </executions>
         <configuration>
           <rules>
+            <requireJavaVersion>
+              <version>1.8</version>
+            </requireJavaVersion>
             <requireMavenVersion>
-              <version>${maven.version}</version>
+              <version>[3.5.0,${maven.version}]</version>
             </requireMavenVersion>
             <bannedDependencies>
               <excludes>
