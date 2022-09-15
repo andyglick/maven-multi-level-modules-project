@@ -31,10 +31,15 @@ Layered under the sub-parent module are 2 child modules whose poms each have jar
 
 ## The Problem
 
-So if the goal was to execute the test phase of only 1 of the pom children, and beyond that to fire only 1 test class from that module, or to be even more
-discriminating, to execute only 1 test from the chosen test class, then at a minimum the *-pl* option would have to be used to name the module. But what I
+It may be worth saying that when I looked at this project this evening I no longer remembered what the Maven **-pl** option
+indicated, it turns out that **-pl** is an abreviation for **--projects**. **--projects** can ne strung out one after the other 
+with commas used as delimiters
+
+So if the goal was to execute from the project's base dir the test phase of only 1 of the pom children, and beyond that to 
+fire only 1 test class from that module, or to be even more
+discriminating, to execute only 1 test from the chosen test class, then at a minimum the **-pl** option would have to be used to name the module. But what I
 couldn't figure out was how to specify the name of the module correctly so that the Maven engine would recognize it and run the surefire plugin on it. In the
-end, and what I often find to be the case when munging around with Maven internals, *-X* is your friend. What I saw in the Maven run log was:
+end, and what I often find to be the case when munging around with Maven internals, **-X** is your friend. What I saw in the Maven run log was:
 
     [INFO] Scanning for projects...
     [INFO] ------------------------------------------------------------------------
@@ -81,9 +86,6 @@ Why this important piece of information is hidden in the DEBUG output and isn't 
 design decision on the part of the Maven developers.
 
 ## The Solution
-
-It may be worth saying that when I looked at this evening I no longer remembered what the Maven -pl option 
-indicated, it turns out that -pl is an abreviation for --projects
 
 So in the case of executing the test phase only in the maven-multiple-level-modules-first module the syntax turned 
 out to be:
