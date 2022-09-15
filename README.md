@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/andyglick/maven-multi-level-modules-project.png)](https://travis-ci.org/andyglick/maven-multi-level-modules-project)
-[![Dependency Status](https://www.versioneye.com/user/projects/57a34ccf1dadcb0046375dc7/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57a34ccf1dadcb0046375dc7)
-#Multiple Level Maven Modules
+# Invoking builds into Multiple Level Maven Module Structures
 
 My friend Rob recently asked me if I knew how to execute a single test in a Maven module that was nested 2 or more levels below the parent pom and I
 didn't know how to do that, and none of the suggestions that I made worked for him in his environment. I didn't have any visibility into his project's
@@ -17,20 +16,20 @@ This is the directory structure of the project
 There is a pom in each module directory. In the 3 modules below the root module, each references the one above it as it's parent. The 2 parent modules each
 reference their respective children in its own *modules* section.
 
-##The parent pom
+## The parent pom
 
 There is a parent pom in the top level module, whose type is pom
 
-##The sub-parent pom
+## The sub-parent pom
 
 Directly below the parent module there is another module with a parent pom. Let's refer to it as the sub-parent module containing a sub-parent pom, and its
 type is also pom
 
-##The pom children
+## The pom children
 
 Layered under the sub-parent module are 2 child modules whose poms each have jar as their type.
 
-##The Problem
+## The Problem
 
 So if the goal was to execute the test phase of only 1 of the pom children, and beyond that to fire only 1 test class from that module, or to be even more
 discriminating, to execute only 1 test from the chosen test class, then at a minimum the *-pl* option would have to be used to name the module. But what I
@@ -75,16 +74,19 @@ end, and what I often find to be the case when munging around with Maven interna
     [DEBUG] Style:   Regular
     [DEBUG] =======================================================================
 
-
 So it turns out that the GAV for each module applies here. GAV is a Maven technical concept that resolves to GroupId, ArtifactId and Version. And what you
 can see on each of the "[DEBUG] Project:" lines is in fact the GAV of the module to be executed.
 
 Why this important piece of information is hidden in the DEBUG output and isn't included in the default INFO text is beyond me. It is another "interesting"
 design decision on the part of the Maven developers.
 
-##The Solution
+## The Solution
 
-So in the case of executing the test phase only in the maven-multiple-level-modules-first module the syntax turned out to be:
+It may be worth saying that when I looked at this evening I no longer remembered what the Maven -pl option 
+indicated, it turns out that -pl is an abreviation for --projects
+
+So in the case of executing the test phase only in the maven-multiple-level-modules-first module the syntax turned 
+out to be:
 
     mvn test -pl org.zrgs.maven:maven-multiple-level-modules-first
 
@@ -96,5 +98,12 @@ And to execute only the testOfCopyOfTestApp in the TestApp class the syntax is:
 
     mvn test -pl org.zrgs.maven:maven-multiple-level-modules-first -Dtest=AppTest#testOfCopyOfTestApp
 
-For completists, I wasn't able to get the syntax to execute multiple tests from the test class using the "+" as a between test delimiter to work. When I
-tried it Surefire threw various exceptions.
+For completists, I was able to craft the syntax to explicitly execute multiple tests from a single test class 
+using the "+" as the between test delimiter. Surefire is now capable of handling that, it no longer throws exceptions
+
+The pom file uses maven-surefire-plugin:3.0.0-M7 and junit:4.13.2 
+
+    mvn test -pl org.zrgs.maven:maven-multiple-level-modules-first -Dtest=AppTest#testOfCopyOfTestApp+testApp
+
+I removed all of the references to the late and not especially lamented versioneye service from any and all 
+pom files
