@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.zrgs.maven</groupId>
+  <artifactId>maven-multiple-level-modules-parent</artifactId>
+  <version>1.0.4-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>maven-multiple-level-modules-parent</name>
+
+  <distributionManagement>
+    <repository>
+      <id>internal.repo</id>
+      <name>Temporary Staging Repository</name>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
+  </distributionManagement>
+
+  <scm>
+    <developerConnection>scm:git:https://github.com/andyglick/maven-multi-level-modules-project.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <repositories>
+    <repository>
+      <id>jenkins.ci</id>
+      <name>Jenkins Maven Repo</name>
+      <url>http://repo.jenkins-ci.org/releases</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jenkins.ci</id>
+      <name>Jenkins Maven Repo</name>
+      <url>http://repo.jenkins-ci.org/releases</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <properties>
+    <compiler.plugin.version>4.0.0-beta-1</compiler.plugin.version>
+    <dependency.plugin.version>3.7.1</dependency.plugin.version>
+    <enforcer.plugin.version>3.5.0</enforcer.plugin.version>
+    <help.plugin.version>3.4.1</help.plugin.version>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.version>4.0.0-beta-3</maven.version>
+    <minimum.maven.version>3.6.3</minimum.maven.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <resources.plugin.version>4.0.0-beta-1</resources.plugin.version><surefire.reportFormat>plain</surefire.reportFormat>
+    <surefire.useFile>false</surefire.useFile>
+    <surefire.version>3.3.1</surefire.version>
+    <versions.plugin.version>2.17.0</versions.plugin.version>
+  </properties>
+
+  <modules>
+    <module>maven-multiple-level-modules-sub-parent</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.13.2</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <profiles>
+    <profile>
+      <id>coverage-generate</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.7.9</version>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <!--<execution>-->
+              <!--<id>ut-report</id>-->
+              <!--<phase>prepare-package</phase>-->
+              <!--<goals>-->
+              <!--<goal>report</goal>-->
+              <!--<goal>restore-instrumented-classes</goal>-->
+              <!--</goals>-->
+              <!--</execution>-->
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>coverage-report</id>
+    </profile>
+
+  </profiles>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-resources-plugin</artifactId>
+              <version>${resources.plugin.version}</version>
+          </plugin>
+          
+          <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${compiler.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${dependency.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${surefire.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>${help.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${surefire.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${versions.plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${enforcer.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>enforce-dependency-convergence</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <rules>
+            <requireJavaVersion>
+              <version>1.8</version>
+            </requireJavaVersion>
+            <requireMavenVersion>
+              <version>[${minimum.maven.version},${maven.version}]</version>
+            </requireMavenVersion>
+            <bannedDependencies>
+              <excludes>
+                <!-- use slf4j -->
+                <exclude>commons-logging</exclude>
+                <exclude>log4j</exclude>
+                <exclude>log4j:log4j</exclude>
+                <!-- use org.jdom -->
+                <exclude>jdom:jdom</exclude>
+                <!-- use commons-io:commons-io -->
+                <exclude>org.apache.commons:commons-io</exclude>
+              </excludes>
+              <searchTransitive>true</searchTransitive>
+            </bannedDependencies>
+            <DependencyConvergence/>
+          </rules>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-help-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
